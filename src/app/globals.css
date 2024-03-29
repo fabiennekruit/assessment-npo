@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .disable-blur {
+    image-rendering: pixelated;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
