@@ -11,7 +11,7 @@ export const PokemonProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchPokemons(20, 0); // Fetching 20 pokemons starting from index 0
+        const data = await fetchPokemons(64, 0);
         setPokemonData(data);
       } catch (error) {
         console.error("Failed to fetch Pokémon:", error);
