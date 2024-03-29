@@ -17,8 +17,11 @@ const fetchPokemons = async (
     const pokemonData = result.map((data) => ({
       id: data.id,
       name: data.name,
-      image: data.sprites["front_default"],
+      types: data.types,
+      abilities: data.abilities,
+      images: [data.sprites.front_default, data.sprites.back_default],
     }));
+
     return pokemonData;
   } catch (error) {
     console.error("Failed to fetch Pokémon:", error);

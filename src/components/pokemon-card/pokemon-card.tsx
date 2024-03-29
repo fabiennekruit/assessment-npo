@@ -12,10 +12,14 @@ export function PokemonCard({ pokemon }: TPokemonCardProps) {
       key={pokemon.id}
       className="rounded-sm border border-gray-200 shadow-sm"
     >
-      <Link href={`/pokemons/${pokemon.name}`} className="w-full h-full">
+      <Link
+        href={`/${pokemon.types[0].type.name}/${pokemon.name}`}
+        className="w-full h-full"
+      >
         <div className="flex flex-col items-center gap-2 p-2">
           <Image
-            src={pokemon.image}
+            className="disable-blur"
+            src={pokemon.images[0]}
             alt={pokemon.name}
             width={140}
             height={140}

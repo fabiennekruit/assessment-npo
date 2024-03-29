@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { PokemonContext } from "@/context/PokemonsContext/pokemons-context";
+import { useContext, useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -9,39 +10,22 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { TDetailPokemon } from "@/types/DetailPokemon";
-import { fetchPokemonDetail } from "@/lib/fetch-pokemon-detail";
+import { TPokemon } from "@/types/Pokemon";
+import PokemonDetailTable from "../pokemon-detail-table/pokemon-detail-table";
+import { PokemonTypeList } from "../pokemon-type-list/pokemon-type-list";
 
 const PokemonDetail = ({ params }: { params: string }) => {
   const currentPokemon = params;
-  const [pokemon, setPokemon] = useState<TDetailPokemon | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const pokemonData = useContext(PokemonContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const pokemonData = await fetchPokemonDetail(currentPokemon);
-        setPokemon(pokemonData);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [currentPokemon]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const pokemon = pokemonData.find(
+    (pokemon: TPokemon) => pokemon.name === currentPokemon
+  );
 
   return (
     <div>
       {pokemon ? (
         <div>
-          <h1>{pokemon.name}</h1>
           <Carousel
             className="max-w-screen-sm mx-auto"
             opts={{
@@ -50,10 +34,11 @@ const PokemonDetail = ({ params }: { params: string }) => {
             }}
           >
             <CarouselContent>
-              {pokemon.images.map((image, index) => {
+              {pokemon.images.map((image: string, index: number) => {
                 return (
                   <CarouselItem key={index}>
                     <Image
+                      className="disable-blur"
                       width="200"
                       height="200"
                       src={image}
@@ -66,6 +51,12 @@ const PokemonDetail = ({ params }: { params: string }) => {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
+
+          <PokemonDetailTable
+            abilities={pokemon.abilities}
+            types={pokemon.types}
+          />
+          <PokemonTypeList typeName={pokemon.types[0]} />
         </div>
       ) : null}
     </div>
