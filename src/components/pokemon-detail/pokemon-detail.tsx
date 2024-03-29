@@ -56,7 +56,10 @@ const PokemonDetail = ({ params }: { params: string }) => {
             abilities={pokemon.abilities}
             types={pokemon.types}
           />
-          <PokemonTypeList typeName={pokemon.types[0]} />
+          <PokemonTypeList
+            typeName={pokemon.types[0]}
+            currentPokemonName={pokemon.name}
+          />
         </div>
       ) : null}
     </div>
