@@ -1,15 +1,19 @@
 import { TPokemon } from "@/types/Pokemon";
 
-const fetchPokemons = async (limit: number): Promise<TPokemon[]> => {
+const fetchPokemons = async (
+  limit: number,
+  offset: number
+): Promise<TPokemon[]> => {
   const promises = [];
+  const totalPokemonsToFetch = limit + offset;
 
-  for (let i = 1; i <= limit; i++) {
+  for (let i = 1 + offset; i <= totalPokemonsToFetch; i++) {
     const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
     promises.push(fetch(url).then((res) => res.json()));
   }
-
   try {
     const result = await Promise.all(promises);
+
     const pokemonData = result.map((data) => ({
       id: data.id,
       name: data.name,
