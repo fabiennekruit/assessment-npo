@@ -8,15 +8,20 @@ type TPokemonCardProps = {
 
 export function PokemonCard({ pokemon }: TPokemonCardProps) {
   return (
-    <li key={pokemon.id}>
-      <Link href={`/pokemons/${pokemon.name}`}>
-        <Image
-          src={pokemon.image}
-          alt={pokemon.name}
-          width={100}
-          height={100}
-        />
-        <h3>{pokemon.name}</h3>
+    <li
+      key={pokemon.id}
+      className="rounded-sm border border-gray-200 shadow-sm"
+    >
+      <Link href={`/pokemons/${pokemon.name}`} className="w-full h-full">
+        <div className="flex flex-col items-center gap-2 p-2">
+          <Image
+            src={pokemon.image}
+            alt={pokemon.name}
+            width={140}
+            height={140}
+          />
+          <h3>{pokemon.name}</h3>
+        </div>
       </Link>
     </li>
   );
